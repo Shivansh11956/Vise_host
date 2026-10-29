@@ -18,7 +18,7 @@ const helpModel = require('./models/help');
 const trackFundModel = require('./models/tracked_fund');
 const trackedFixedModel = require('./models/tracked_fd');
 const bondModel = require('./models/bond');
-
+const PORT = process.env.PORT || 3000;
 app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -675,6 +675,6 @@ app.get('/api/mf-schemes/:schemeCode', async (req, res) => {
         });
     }
 });
-app.listen(4000,()=>{
+app.listen(PORT,()=>{
     console.log('running');
 });
