@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vise - Fund Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdn.jsdelivr.net/npm/awesomplete/awesomplete.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/awesomplete/awesomplete.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Montserrat;
+            background-color: #171717;
+            color: #ffffff;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 20px;
+        }
+
+        /* Header */
+        .header {
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            font-weight: 300;
+            color: white;
+            letter-spacing: -4.5px;
+            font-weight: 500;
+            font-family: Montserrat;
+        }
+
+        /* Main Layout */
+        .main-layout {
+            display: flex;
+            justify-content: center;
+            align-items: start;
+            
+            background-color: #22c55e;
+        }
+
+        
+        .your-funds {
+            min-height: 500px;
+            /* max-width: 90vw; */
+            max-width: 700px;
+            /* padding-left: 250px;
+            padding-right: 250px; */
+        }
+
+        .your-funds h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+        .your-funds p{
+            margin-bottom: 20px;
+            color: #888888;
+            font-size: 0.85rem;
+        }
+
+        .funds-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        
+        .fund-card {
+            background-color: #1c1c1c;
+            border-radius: 6px;
+            padding: 24px;
+            border: 1px solid rgba(56,56,56,0.3);
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .fund-card:hover {
+            background-color: #2f2f2f3f;
+            /* border-color: #444444; */
+        }
+
+        .fund-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .fund-symbol {
+            width: 32px;
+            height: 32px;
+            background-color: #4a4a4a;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #ffffff;
+        }
+
+        .fund-status {
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background-color: rgba(34, 197, 94, 0.1);
+            color: #22c55e;
+        }
+
+        .status-inactive {
+            background-color: rgba(153,156,37,0.1);
+            color: #c4c342;
+        }
+
+        .fund-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #ffffff;
+        }
+
+        .fund-type {
+            color: #888888;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+
+        .fund-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .detail-group {
+            text-align: left;
+        }
+
+        .detail-label {
+            font-size: 0.8rem;
+            color: #888888;
+            margin-bottom: 4px;
+        }
+
+        .detail-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .fund-actions {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #333333;
+            display: flex;
+            gap: 12px;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            background-color: transparent;
+            border: 1px solid rgba(56,56,56,0.3);
+            border-radius: 4px;
+            color: #888888;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .action-btn:hover {
+            opacity: 0.8;
+            /* background-color: #3a3a3a40;
+            color: #ffffff;
+            border-color: #555555; */
+        }
+         button{
+            font-family: Montserrat;
+         }
+        .last-log {
+            margin-top: 12px;
+            font-size: 0.8rem;
+            color: #666666;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .main-layout {
+                grid-template-columns: 350px 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .main-layout {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .track-funds {
+                position: static;
+                padding: 30px;
+            }
+
+            .fund-details {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .fund-actions {
+                flex-direction: column;
+            }
+
+            .action-btn {
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px 10px;
+            }
+
+            .track-funds {
+                padding: 20px;
+            }
+
+            .fund-card {
+                padding: 20px;
+            }
+
+            .logo {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="logo">vise.</h1>
+        </header>
+
+        <!-- <div class="main-layout"> -->
+            <div class="your-funds">
+                <h2>Your FDs</h2>
+                <p>Automated e-mail will be send to registered mail-id.</p>
+                <div class="funds-grid" id="fundsGrid">
+                  
+                </div>
+            </div>
+        <!-- </div> -->
+    </div>
+
+    <script>
+        let fundList = [];  
+        let inputField = document.getElementById("fundInput");
+        let currentNavField = document.getElementById("currentNav")
+        async function pauseFund(id){
+            // console.log('fwkjfkwe')
+            await fetch(`/fixed-deposits/track/pause/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            }); 
+            location.reload()
+        }
+        async function resumeFund(id){
+            // console.log('fwkjfkwe')
+            await fetch(`/fixed-deposits/track/resume/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            }); 
+            location.reload()
+        }
+        async function removeFund(id){
+            // console.log('fwkjfkwe')
+            await fetch(`/fixed-deposits/track/remove/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            }); 
+            location.reload()
+        }
+        async function trackedFunds(){
+           let trackedFdForUser = await fetch('/api/fixed-deposits/track')
+           
+           trackedFdForUser = await trackedFdForUser.json()
+           console.log(trackedFdForUser)
+           let fundsGrid = document.getElementById('fundsGrid')
+           for(let i = 0;i<trackedFdForUser.length;i++){
+             let pausebtn = ''
+             let activeClass = 'status-active'
+             let activePause = 'Active'
+             if(trackedFdForUser[i].status == 0){ activeClass = 'status-inactive'; activePause = 'Paused'}
+             if(trackedFdForUser[i].status == 1) pausebtn = `<button class="action-btn" onclick="pauseFund('${trackedFdForUser[i]._id}')">Pause</button>`;
+             else pausebtn = `<button class="action-btn" onclick="resumeFund('${trackedFdForUser[i]._id}')">Resume</button>`;
+             fundsGrid.innerHTML = `<div class="fund-card">
+                        <div class="fund-header">
+                            <div class="fund-symbol">${trackedFdForUser[i].fdName.slice(0,2).toUpperCase()}</div>
+                            <div class="fund-status ${activeClass}">● ${activePause}</div>
+                        </div>
+                        <div class="fund-name">${trackedFdForUser[i].fdName}</div>
+                        <div class="fund-type">Date : ${trackedFdForUser[i].date.slice(0,10)}</div>
+                        <div class="fund-details">
+                            <div class="detail-group">
+                                <div class="detail-label">Maturity  Period : ${trackedFdForUser[i].maturityPeriod}</div>
+                            </div>
+                            <div class="detail-group">
+                                <div class="detail-label">Invested Amount : ₹ ${trackedFdForUser[i].fdInvestment}</div>
+                            </div>
+                        </div>
+                        <div class="last-log">Latest Log : ${trackedFdForUser[i].lastLog}</div>
+                        <div class="fund-actions">
+                            ${pausebtn}
+                            <button class="action-btn" onclick="removeFund('${trackedFdForUser[i]._id}')">Remove</button>
+                        </div>
+                    </div>` + fundsGrid.innerHTML
+           }
+        }
+        trackedFunds()
+        async function loadFunds() {
+            try {
+                const response = await fetch("https://api.mfapi.in/mf");
+                fundList = await response.json();
+
+                let fundNames = fundList.map(fund => fund.schemeName);
+                new Awesomplete(inputField, { list: fundNames });
+
+            } catch (error) {
+                console.error("Error fetching fund list:", error);
+            }
+           
+        }
+        loadFunds()
+      
+        let fundCode = ""
+
+        inputField.addEventListener("awesomplete-selectcomplete",async function(event) {
+            let selectedValue = event.text.value;
+            console.log("Selected:", selectedValue);
+            let selectedFund = fundList.find(fund => fund.schemeName.toLowerCase() === inputField.value.toLowerCase());
+            console.log(selectedFund)
+            fundCode = selectedFund.schemeCode;
+            fundHouse = selectedFund.fund_house
+            let res = await fetch(`https://api.mfapi.in/mf/${fundCode}/latest`)
+            let data = await res.json()
+            console.log(data.data[0].nav)
+            currentNavField.value = data.data[0].nav
+
+            
+        });
+        async function addFund() {
+            let fundName = document.getElementById('fundInput').value.trim();
+            let currentNav = document.getElementById('currentNav').value.trim()
+            let targetNav = document.getElementById('targetNav').value.trim();
+            let fundHouse = await fetch(`https://api.mfapi.in/mf/${fundCode}/latest`)
+            fundHouse = await fundHouse.json()
+            fundHouse = fundHouse.meta.fund_house
+            let fundDetails = [fundName,currentNav,targetNav,fundCode,fundHouse]
+            if (!fundName || !targetNav) {
+                alert('Please fill in all fields');
+                return;
+            }
+            await fetch('/api/mutual-funds/track', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(fundDetails)
+            });
+            location.reload()
+        }
+
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addFund();
+            }
+        });
+
+        
+    </script>
+</body>
+</html>
